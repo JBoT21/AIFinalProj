@@ -1,7 +1,7 @@
 # main.py  —  run this from ~/TurboPi/turbopi_nav/
 import sys, os, time, numpy as np
 
-sys.path.append('/home/pi/TurboPi/')  # must be before any HiwonderSDK import
+sys.path.append('/home/pi/TurboPi/')
 
 from driver  import move, stop, get_distance
 from OccupancyGrid      import grid, update_grid
