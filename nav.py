@@ -3,40 +3,44 @@
   DWA smooths the moment-to-moment driving
 """
 
-def navigate(start, goal):
+import time, numpy as np
+
+def navigate(start, goal, grid, move_fn, stop_fn, dist_fn,
+             astar_fn, dwa_fn, q_fns):
+
+    choose_action, update_q, get_state, get_reward, ACTIONS = q_fns
     robot_pos = list(start)
-    path = astar(grid, tuple(start), goal)
+    path = astar_fn(grid, tuple(start), goal)
     waypoint_idx = 0
 
+    print(f"[Nav] Path found: {len(path)} waypoints")
+
     while waypoint_idx < len(path):
-        dist = get_distance()
+        dist  = dist_fn()
         state = get_state(dist)
 
         if dist < 20:
-            # Danger zone — let Q-learning react
-            action_idx = choose_action(state, epsilon=0.05)
-            action = ACTIONS[action_idx]
-            if   action == 'left':  move(40, -0.6)
-            elif action == 'right': move(40,  0.6)
-            elif action == 'back':  move(-40, 0)
-            else:                   move(60, 0)
+            action_idx = choose_action(state)
+            action     = ACTIONS[action_idx]
+            if   action == 'left':  move_fn(40, -0.6)
+            elif action == 'right': move_fn(40,  0.6)
+            elif action == 'back':  move_fn(-40, 0)
+            else:                   move_fn(60, 0)
 
-            new_dist = get_distance()
-            reward = get_reward(new_dist)
-            update_q(state, action_idx, reward, get_state(new_dist))
+            new_dist = dist_fn()
+            update_q(state, action_idx, get_reward(new_dist), get_state(new_dist))
 
         else:
-            # Open space — follow A* via DWA
-            wp = path[waypoint_idx]
+            wp       = path[waypoint_idx]
             goal_dir = np.arctan2(wp[1]-robot_pos[1], wp[0]-robot_pos[0])
-            speed, turn = dwa_control(60, goal_dir, dist)
-            move(speed, turn)
+            speed, turn = dwa_fn(60, goal_dir, dist)
+            move_fn(speed, turn)
 
-            # Advance waypoint when close enough
             if abs(robot_pos[0]-wp[0]) < 2 and abs(robot_pos[1]-wp[1]) < 2:
                 waypoint_idx += 1
+                print(f"[Nav] Waypoint {waypoint_idx}/{len(path)}")
 
         time.sleep(0.1)
 
-    stop()
+    stop_fn()
     print("Goal reached!")
