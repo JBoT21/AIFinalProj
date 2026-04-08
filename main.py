@@ -1,13 +1,13 @@
-import time
-import numpy as np
-import os
+# main.py  —  run this from ~/TurboPi/turbopi_nav/
+import sys, os, time, numpy as np
 
-# All import modules
-from driver  import car, sonar, move, stop, get_distance
-from OccupancyGrid      import grid, update_grid, GRID_SIZE
+sys.path.append('/home/pi/TurboPi/')  # must be before any HiwonderSDK import
+
+from driver  import move, stop, get_distance
+from OccupancyGrid      import grid, update_grid
 from AStar     import astar
 from QLearn import Q, choose_action, update_q, get_state, get_reward, ACTIONS
-from DynamicWindowApproach       import dwa_control
+from DynamicWindowApproach import dwa_control
 from nav import navigate
 
 START = (0, 0) #Change this to actual starting position
