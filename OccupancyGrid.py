@@ -1,7 +1,7 @@
 #All three algorithms operate on the same 2D grid
 import numpy as np
 
-GRID_SIZE = 50   # Just choosing a value, idk if 50 is good or not
+GRID_SIZE = 5   # Just choosing a value, idk if 5 is good or not
 CELL_CM   = 10   # each cell = 10 cm (idk, just picking a number)
 
 grid = np.zeros((GRID_SIZE, GRID_SIZE), dtype=np.uint8)

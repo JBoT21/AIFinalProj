@@ -13,7 +13,7 @@ def navigate(start, goal, grid, move_fn, stop_fn, dist_fn,
     path = astar_fn(grid, tuple(start), goal)
     waypoint_idx = 0
 
-    print(f"[Nav] Path found: {len(path)} waypoints")
+    print(f"Path found: {len(path)} waypoints")
 
     while waypoint_idx < len(path):
         dist  = dist_fn()
