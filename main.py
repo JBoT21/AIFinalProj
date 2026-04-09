@@ -11,7 +11,7 @@ from DynamicWindowApproach import dwa_control
 from nav import navigate
 
 START = (0, 0) #Change this to actual starting position
-GOAL  = (50, 50) #Change this to actual goal position
+GOAL  = (5, 5) #Change this to actual goal position
 Q_PATH = "qtable.npy"
 
 def load_q():
