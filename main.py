@@ -1,4 +1,4 @@
-# main.py  —  run this from ~/TurboPi/turbopi_nav/
+# Note to self:  run this from ~/TurboPi/turbopi_nav/
 import sys, os, time, numpy as np
 
 sys.path.append('/home/pi/TurboPi/')
