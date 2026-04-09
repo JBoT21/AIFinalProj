@@ -1,4 +1,7 @@
-#Q-learning handles the dynamic, unpredictable parts (new obstacles, narrow gaps) that A* can't anticipate:
+"""Q-learning handles the dynamic, unpredictable parts (
+new obstacles, narrow gaps) that A* can't anticipate
+"""
+
 import numpy as np, random
 
 ACTIONS = ['forward', 'left', 'right', 'back']
