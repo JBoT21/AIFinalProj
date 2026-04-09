@@ -18,13 +18,13 @@ def load_q():
     global Q
     if os.path.exists(Q_PATH):
         Q[:] = np.load(Q_PATH)
-        print(f"[Q] Loaded Q-table from {Q_PATH}")
+        print(f"Loaded Q-table from {Q_PATH}")
     else:
-        print("[Q] Starting with fresh Q-table")
+        print("Starting with fresh Q-table")
 
 def save_q():
     np.save(Q_PATH, Q)
-    print(f"[Q] Q-table saved to {Q_PATH}")
+    print(f"Q-table saved to {Q_PATH}")
 
 if __name__ == "__main__":
 
