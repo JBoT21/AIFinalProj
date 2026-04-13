@@ -10,8 +10,8 @@ from QLearn import Q, choose_action, update_q, get_state, get_reward, ACTIONS
 from DynamicWindowApproach import dwa_control
 from nav import navigate
 
-START = (0, 0) #Change this to actual starting position
-GOAL  = (5, 5) #Change this to actual goal position
+START = (0, 0) 
+GOAL  = (5, 5) 
 Q_PATH = "qtable.npy"
 
 def load_q():
