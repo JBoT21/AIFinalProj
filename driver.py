@@ -18,7 +18,7 @@ def get_distance():
 
 # ── Motion helpers ─────────────────────────────────────────
 def move_forward(speed=60):
-    mecanum.set_velocity(speed, 90, 0)
+    mecanum.setVelocity(speed, 90, 0)
 
 def move_backward(speed=40):
     mecanum.set_velocity(speed, 270, 0)
