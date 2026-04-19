@@ -2,50 +2,64 @@ import sys
 import os
 import time
 
-# Point Python to the real SDK location
 sys.path.append('/home/raspberrypi/TurboPi/TurboPi/')
 
-import HiwonderSDK.mecanum as mecanum
+import HiwonderSDK.mecanum as mecanum_mod
 import HiwonderSDK.Sonar as Sonar
+
+# ── Initialize chassis ─────────────────────────────────────
+# Try all known class names used in different TurboPi SDK versions
+if hasattr(mecanum_mod, "MecanumChassis"):
+    mecanum = mecanum_mod.MecanumChassis()
+elif hasattr(mecanum_mod, "Mecanum"):
+    mecanum = mecanum_mod.Mecanum()
+else:
+    raise RuntimeError("No Mecanum chassis class found in HiwonderSDK.mecanum")
+
+# Detect correct movement function
+if hasattr(mecanum, "set_velocity"):
+    set_vel = mecanum.set_velocity
+elif hasattr(mecanum, "setVelocity"):
+    set_vel = mecanum.setVelocity
+elif hasattr(mecanum, "setSpeed"):
+    set_vel = mecanum.setSpeed
+elif hasattr(mecanum, "setCarRun"):
+    set_vel = mecanum.setCarRun
+else:
+    raise RuntimeError("No velocity-setting function found in chassis object")
 
 # ── Sonar setup ────────────────────────────────────────────
 sonar = Sonar.Sonar()
 
 def get_distance():
-    """Returns distance in cm from the ultrasonic sensor."""
     dist = sonar.getDistance()
-    return dist if dist > 0 else 999  # 999 = no reading / open space
+    return dist if dist > 0 else 999
 
 # ── Motion helpers ─────────────────────────────────────────
 def move_forward(speed=60):
-    mecanum.setVelocity(speed, 90, 0)
+    set_vel(speed, 90, 0)
 
 def move_backward(speed=40):
-    mecanum.set_velocity(speed, 270, 0)
+    set_vel(speed, 270, 0)
 
 def turn_left(speed=50, yaw=-0.6):
-    mecanum.set_velocity(speed, 90, yaw)
+    set_vel(speed, 90, yaw)
 
 def turn_right(speed=50, yaw=0.6):
-    mecanum.set_velocity(speed, 90, yaw)
+    set_vel(speed, 90, yaw)
 
 def strafe_left(speed=50):
-    mecanum.set_velocity(speed, 180, 0)
+    set_vel(speed, 180, 0)
 
 def strafe_right(speed=50):
-    mecanum.set_velocity(speed, 0, 0)
+    set_vel(speed, 0, 0)
 
 def stop():
-    mecanum.set_velocity(0, 90, 0)
+    set_vel(0, 90, 0)
 
 def move(speed, turn):
-    """
-    Main movement function used by navigation.
-    speed: -100 to 100 (negative = backward)
-    turn: -2.0 to 2.0 (negative = left, positive = right)
-    """
     if speed == 0:
         stop()
     else:
         direction = 90 if speed > 0 else 270
-        mecanum.set_velocity(abs(speed), direction, turn)
+        set_vel(abs(speed), direction, turn)
