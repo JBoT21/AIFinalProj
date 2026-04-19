@@ -16,7 +16,7 @@ elif hasattr(mecanum_mod, "Mecanum"):
 else:
     raise RuntimeError("No Mecanum chassis class found in HiwonderSDK.mecanum")
 
-# Detect correct movement function
+# Detect correct movement function name (varies across SDK versions)
 if hasattr(mecanum, "set_velocity"):
     set_vel = mecanum.set_velocity
 elif hasattr(mecanum, "setVelocity"):
