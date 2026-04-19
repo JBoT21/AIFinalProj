@@ -1,7 +1,7 @@
 # Note to self:  run this from ~/TurboPi/turbopi_nav/
 import sys, os, time, numpy as np
 
-sys.path.append('/home/pi/TurboPi/')
+sys.path.append('/home/raspberrypi/TurboPi/TurboPi/')
 
 from driver  import move, stop, get_distance
 from OccupancyGrid      import grid, update_grid
@@ -12,7 +12,7 @@ from nav import navigate
 
 START = (0, 0) 
 GOAL  = (5, 5) 
-Q_PATH = "qtable.npy"
+Q_PATH = "/home/raspberrypi/TurboPi/turbopi_nav/qtable.npy"
 
 def load_q():
     global Q
