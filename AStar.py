@@ -1,5 +1,6 @@
 #Use A* once at the start (or when replanning) to find the optimal route through the known grid 
 import heapq
+from OccupancyGrid import grid, GRID_SIZE
 
 def heuristic(a, b):
     return abs(a[0]-b[0]) + abs(a[1]-b[1])  # Manhattan distance for grid
